@@ -41,4 +41,4 @@ microphone.onresult = (intent, entities) => {
 };
 
 // Client TOKEN from Wit.ai
-microphone.connect('6NHAXMCI2IC23O4IVOQAE5TG5O62CTPD');
+microphone.connect('3JPHEVDPTA4D7QQ5UN2M36CMAMWOG35X');
