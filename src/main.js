@@ -1,58 +1,44 @@
 'use strict';
 
-var microphone = new Wit.Microphone(document.getElementById('microphone'));
-var info = function (message) {
+const microphone = new Wit.Microphone(document.getElementById('microphone'));
+
+const info = message => {
   document.getElementById('info').innerHTML = message;
 };
-var error = function (message) {
+const error = message => {
   document.getElementById('error').innerHTML = message;
 };
 
 // Microphone part
-microphone.onready = function () {
+microphone.onconnecting = () => {
+  info('Trwa weryfikowanie mikrofonu');
+};
+microphone.ondisconnected = () => {
+  info('Mikrofon nie jest podłączony');
+};
+microphone.onready = () => {
   info('Mikrofon gotowy do nagrywania');
 }
-microphone.onaudiostart = function () {
+microphone.onaudiostart = () => {
   info('Nagrywanie rozpoczęte');
   error('');
 };
-microphone.onaudioend = function () {
-  info('Nagrywanie zakończone, trwa konwertowanie')
+microphone.onaudioend = () => {
+  info('Nagrywanie zakończone, trwa konwertowanie');
 };
-microphone.onresult = function (intent, entities) {
-  var r = kv('intent', intent);
+microphone.onerror = errorMessage => {
+  error('Błąd: ' + errorMessage);
+};
 
-  for (var k in entities) {
-    var e = entities[k];
-
-    if (!(e instanceof Array)) {
-      r += kv(k, e.value);
+microphone.onresult = (intent, entities) => {
+    if (entities.fullName === undefined) {
+        document.getElementById('result').innerHTML = 'Nie zrozumiałem, spróbuj jeszcze raz!';
     } else {
-      for (var i = 0; i < e.length; i++) {
-        r += kv(k, e[i].value);
-      }
+        let fullName = entities.fullName.value;
+        document.getElementById('result').innerHTML = fullName + '? Szukam na wikipedii...';
+        window.open('https://pl.wikipedia.org/wiki/' + fullName.replace(' ', '_'));
     }
-  }
-
-  document.getElementById('result').innerHTML = r;
-};
-microphone.onerror = function (errorMessage) {
-  error('Błąd:' + errorMessage);
-};
-microphone.onconnecting = function () {
-  info('Trwa weryfikowanie mikrofonu');
-};
-microphone.ondisconnected = function () {
-  info('Mikrofon nie jest podłączony');
 };
 
 // Client TOKEN from Wit.ai
 microphone.connect('6NHAXMCI2IC23O4IVOQAE5TG5O62CTPD');
-
-// Additional
-function kv (k, v) {
-  if (toString.call(v) !== "[object String]") {
-    v = JSON.stringify(v);
-  }
-  return k + "=" + v + "\n";
-}
