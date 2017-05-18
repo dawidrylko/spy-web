@@ -34,7 +34,14 @@ microphone.onresult = (intent, entities) => {
     if (entities.fullName === undefined) {
         document.getElementById('result').innerHTML = 'Nie zrozumiałem, spróbuj jeszcze raz!';
     } else {
-        let fullName = capitalizeLetter(entities.fullName.value);
+        let fullName = entities.fullName.value.split(' ');
+        
+        if (fullName.length === 2) {
+          fullName = capitalizeLetter(entities.fullName.value);
+        }
+
+        fullName = fullName.join(' ');
+
         document.getElementById('result').innerHTML = fullName + '? Szukam na wikipedii...';
         window.open('https://pl.wikipedia.org/wiki/' + fullName.replace(' ', '_'));
     }
@@ -43,14 +50,13 @@ microphone.onresult = (intent, entities) => {
 // Client TOKEN from Wit.ai
 microphone.connect('3JPHEVDPTA4D7QQ5UN2M36CMAMWOG35X');
 
-function capitalizeLetter(string) {
-	let splittedString = string.split(' ');
+function capitalizeLetter(fullName) {
+  let tempFullName = fullName.split(' ');
   let words = [];
 
-  for (let item of splittedString) {
+  for (let item of tempFullName) {
     words.push(item.charAt(0).toUpperCase() + item.slice(1));
   }
   
-  console.log(words.join(' '));
-  return words.join(' ');
+  return words;
 }
