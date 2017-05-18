@@ -34,7 +34,7 @@ microphone.onresult = (intent, entities) => {
     if (entities.fullName === undefined) {
         document.getElementById('result').innerHTML = 'Nie zrozumiałem, spróbuj jeszcze raz!';
     } else {
-        let fullName = entities.fullName.value;
+        let fullName = capitalizeLetter(entities.fullName.value);
         document.getElementById('result').innerHTML = fullName + '? Szukam na wikipedii...';
         window.open('https://pl.wikipedia.org/wiki/' + fullName.replace(' ', '_'));
     }
@@ -42,3 +42,15 @@ microphone.onresult = (intent, entities) => {
 
 // Client TOKEN from Wit.ai
 microphone.connect('3JPHEVDPTA4D7QQ5UN2M36CMAMWOG35X');
+
+function capitalizeLetter(string) {
+	let splittedString = string.split(' ');
+  let words = [];
+
+  for (let item of splittedString) {
+    words.push(item.charAt(0).toUpperCase() + item.slice(1));
+  }
+  
+  console.log(words.join(' '));
+  return words.join(' ');
+}
