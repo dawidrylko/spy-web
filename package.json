@@ -2,23 +2,21 @@
   "name": "spy-web",
   "version": "1.0.0",
   "description": "Spy chatbot web app.",
+  "author": "www.dawidrylko.com",
+  "license": "ISC",
+  "homepage": "https://github.com/dawidrylko/spy-web#readme",
   "main": "server.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dawidrylko/spy-web.git"
   },
   "keywords": [
-    "chatbot",
-    "wit",
-    "phone",
-    "manager"
+    "bot",
+    "wit.ai"
   ],
-  "author": "www.dawidrylko.com",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/dawidrylko/spy-web/issues"
   },
-  "homepage": "https://github.com/dawidrylko/spy-web#readme",
   "dependencies": {
     "express": "^4.15.2",
     "heroku-ssl-redirect": "0.0.4"
