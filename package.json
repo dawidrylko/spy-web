@@ -18,7 +18,7 @@
     "url": "https://github.com/dawidrylko/spy-web/issues"
   },
   "dependencies": {
-    "express": "^4.15.2",
+    "express": "^4.17.1",
     "heroku-ssl-redirect": "0.0.4"
   }
 }
